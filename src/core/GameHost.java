@@ -57,7 +57,7 @@ public class GameHost implements ActionListener {
     }
 
     /**
-     * Handles the events from the gamescreen.
+     * Handles the events from the game screen.
      * Started with a timer in this method, did not manage to pull of the threading.
      * @param e ActionEvent provided by Swing interface.
      */

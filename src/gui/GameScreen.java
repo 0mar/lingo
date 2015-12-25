@@ -12,6 +12,11 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
+/**
+ * GUI representing the playing field.
+ * Contains one wordpanel and one score panel. And maybe a timer panel
+ * @author omar
+ */
 public class GameScreen extends JPanel {
 
     private JFrame game;
@@ -35,8 +40,11 @@ public class GameScreen extends JPanel {
         initializeFrame();
     }
 
+    /**
+     * Initializes the frame and underlying panels.
+     */
     private void initializeFrame() {
-        game = new JFrame("LINGO :D");
+        game = new JFrame("Lingo");
         game.setVisible(true);
         game.setSize(WordPanel.SIZE * 2 * length, WordPanel.SIZE * guessnumber);
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,8 +56,8 @@ public class GameScreen extends JPanel {
         nextGuess.setColumns(length * 2);
         submit = new JButton("Submit");
         restart = new JButton("Next Word");
-        info = new JTextArea(String.format("You've got %d attempts! Correct word has %d letters\n\n", guessnumber, length));
-        pointArea = new JTextArea("Punten: " + points);
+        info = new JTextArea(String.format("You've got %d attempts. Correct word has %d letters\n\n", guessnumber, length));
+        pointArea = new JTextArea("Score: " + points);
         info.setFont(new Font("Arial", Font.PLAIN, 24));
         info.setLineWrap(true);
         info.setColumns(20);
@@ -75,6 +83,10 @@ public class GameScreen extends JPanel {
         game.getContentPane().repaint();
     }
 
+    /**
+     * Process a win
+     * @param winnings Points for winning
+     */
     public void win(int winnings) {
         points += winnings;
         this.setBackground(Color.GREEN);
@@ -84,18 +96,30 @@ public class GameScreen extends JPanel {
         pointArea.setText("Punten: " + points);
     }
 
+    /**
+     * Process a loss
+     */
     public void lose() {
         submit.setEnabled(false);
         nextGuess.setEditable(false);
         nextGuess.setEnabled(false);
     }
 
+    /**
+     * Not implemented yet
+     */
     public void startTimer() {
     }
 
+    /**
+     * Not implemented yet
+     */
     public void stopTimer() {
     }
 
+    /**
+     * Reset the game screen.
+     */
     public void reset() {
         submit.setEnabled(true);
         nextGuess.setEditable(true);
