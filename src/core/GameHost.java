@@ -7,8 +7,9 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 /**
- * Main lingo file.
- * Has main method. Initializes GUI, starts game and listens for input
+ * Main lingo file. Has main method. Initializes GUI, starts game and listens
+ * for input
+ *
  * @author omar
  */
 public class GameHost implements ActionListener {
@@ -24,41 +25,43 @@ public class GameHost implements ActionListener {
 
     /**
      * Constructor of GameHost. Starts a new application.
+     *
      * @param word_length length of words in Lingo game
      */
     public GameHost(int word_length) {
         this.length = word_length;
         words = new WordPopper(length);
-        this.solution = new Word("beleid");
+        this.solution = new Word(words.getNextLingoWord());
         System.out.println(this.solution);
         guessAmount = 6;
         checker = new Checker(this.solution);
         screen = new GameScreen(length, guessAmount);
-        screen.lingo.addHint(Checker.addedHint(screen.lingo.getCurrentHints()), checker.getNextHint(screen.lingo.getCurrentHints()));
+        screen.lingo.setSolution(solution);
+        screen.lingo.addHint(checker.getNextHint(screen.lingo.getCurrentHints(), false));
         screen.submit.addActionListener(this);
         screen.nextGuess.addActionListener(this);
         screen.restart.addActionListener(this);
         //screen.lingotimer.addActionListener(this);
         screen.lingo.con.addActionListener(this);
     }
-    
-    
+
     /**
-     * Starts a new game.
-     * Might be neat to refactor this into an "init" method and 
-     * call it in the constructor as well. (TODO)
+     * Starts a new game. Might be neat to refactor this into an "init" method
+     * and call it in the constructor as well. (TODO)
      */
     public void restartGame() {
         this.solution = new Word(words.getNextLingoWord());
+        screen.lingo.setSolution(solution);
         guessCounter = 0;
         checker = new Checker(this.solution);
         screen.reset();
-        screen.lingo.addHint(Checker.addedHint(screen.lingo.getCurrentHints()), checker.getNextHint(screen.lingo.getCurrentHints()));
+        screen.lingo.addHint(checker.getNextHint(screen.lingo.getCurrentHints(), false));
     }
 
     /**
-     * Handles the events from the game screen.
-     * Started with a timer in this method, did not manage to pull of the threading.
+     * Handles the events from the game screen. Started with a timer in this
+     * method, did not manage to pull of the threading.
+     *
      * @param e ActionEvent provided by Swing interface.
      */
     @Override
@@ -82,15 +85,14 @@ public class GameHost implements ActionListener {
             this.restartGame();
         } else if (e.getSource() == screen.lingotimer.timeUp) {
             screen.stopTimer();
-            Hint[] curHints = screen.lingo.getCurrentHints();
-            Word bonusword = checker.getNextHint(curHints);
-            screen.lingo.addHint(Checker.addedHint(curHints), bonusword);
+            int bonusletter = checker.getNextHint(screen.lingo.getCurrentHints(), true);
+            screen.lingo.addHint(bonusletter);
         } else if (e.getSource() == screen.lingo.con) {
             screen.startTimer();
         }
     }
 
     public static void main(String[] args) {
-        GameHost lucille = new GameHost(6);
+        GameHost lucille = new GameHost(5);
     }
 }

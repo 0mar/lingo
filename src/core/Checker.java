@@ -69,45 +69,35 @@ class Checker {
     /**
      * Obtain a new hint for the current solution. The checker returns a Word
      * with one extra correct letter. This means the first (or random, not
-     * implemented) letter that has Hint WRONG or CLOSE. This method is agnostic
-     * of the progress of the guessed word and replaces all other wrong letters
-     * with '!'. Therefore, only use it in combination with the corresponding
-     * hints
+     * implemented) letter that has Hint WRONG or CLOSE.
      *
      * @param curHints The hints we already obtained for the solution
-     * @return A word with one extra correct letter.
+     * @return Location in word of new hint
      */
-    public Word getNextHint(Hint[] curHints) {
-        char[] compword = new char[length];
-        for (int i = 0; i < length; i++) {
-            if (curHints[i] == Hint.CORRECT) {
-                compword[i] = solution.toArray()[i];
-            } else {
-                compword[i] = '!';
-            }
-        }
+    public int getNextHint(Hint[] curHints, boolean random) {
+        int char_location = -1;
+        // Even if not random, we need to see if new hints can be given
         for (int i = 0; i < length; i++) {
             if (curHints[i] != Hint.CORRECT) {
-                compword[i] = solution.toArray()[i];
+                char_location = i;
                 break;
             }
         }
-        return new Word(new String(compword));
-    }
+        if (char_location == -1) {
+            System.out.println("Error: No new hints available");
+            return char_location;
+        }
+        if (!random) {
+            return char_location;
+        }
 
-    /**
-     * Todo: Refactor. Indicates the next hint. Ugly method.
-     *
-     * @param curHints
-     * @return
-     */
-    public static Hint[] addedHint(Hint[] curHints) {
-        for (int i = 0; i < curHints.length; i++) {
-            if (curHints[i] != Hint.CORRECT) {
-                curHints[i] = Hint.CORRECT;
-                break;
+        char_location = -1;
+        while (char_location < 0) {
+            char_location = (int) (Math.random() * length);
+            if (curHints[char_location] == Hint.CORRECT) {
+                char_location = -1;
             }
         }
-        return curHints;
+        return char_location;
     }
 }

@@ -20,8 +20,8 @@ public class WordPanel extends JPanel implements ActionListener {
     public JButton con;
     private int rowsfilled, columnsfilled;
     Timer drawTimer;
-    Word guess, solWord;
-    Hint[] hints, solHints;
+    Word guess, solution;
+    Hint[] hintsForGuess, accumulatedHints;
 
     /**
      * Build a WordPanel. Only one panel is required per player per application.
@@ -31,12 +31,12 @@ public class WordPanel extends JPanel implements ActionListener {
      */
     public WordPanel(int length, int guesses) {
         rowsfilled = 0;
-        solHints = new Hint[length];
-        hints = new Hint[length];
-        Arrays.fill(hints, Hint.WRONG);
-        Arrays.fill(solHints, Hint.WRONG);
+        hintsForGuess = new Hint[length];
+        accumulatedHints = new Hint[length];
+        Arrays.fill(hintsForGuess, Hint.WRONG);
+        Arrays.fill(accumulatedHints, Hint.WRONG);
         guess = Word.emptyWord(length);
-        solWord = Word.emptyWord(length);
+        solution = Word.emptyWord(length);
         this.guesses = guesses;
         this.length = length;
         hintpanels = new HintPanel[guesses][length];
@@ -50,6 +50,10 @@ public class WordPanel extends JPanel implements ActionListener {
             }
         }
     }
+    
+    public void setSolution(Word solution) {
+        this.solution = solution;
+    }
 
     /**
      * Adds guess to the screen and colors the panels according to the hint
@@ -59,7 +63,7 @@ public class WordPanel extends JPanel implements ActionListener {
      */
     public void addWord(Word guess, Hint[] cHints) {
         this.guess = guess;
-        this.hints = cHints;
+        this.hintsForGuess = cHints;
         columnsfilled = 0;
         drawTimer.start();
     }
@@ -70,20 +74,20 @@ public class WordPanel extends JPanel implements ActionListener {
      */
     public void addNextLetters() {
         boolean cont = false;
-        for (Hint h : hints) {
+        for (Hint h : hintsForGuess) {
             cont |= h != Hint.CORRECT;
         }
         if (cont) {
             for (int i = 0; i < length; i++) {
-                if (solHints[i] == Hint.CORRECT) {
-                    hintpanels[rowsfilled][i].setPanel(solWord.toArray()[i]);
+                if (accumulatedHints[i] == Hint.CORRECT) {
+                    hintpanels[rowsfilled][i].setPanel(solution.toArray()[i]);
                 }
             }
         }
     }
 
     public Hint[] getCurrentHints() {
-        return solHints;
+        return accumulatedHints;
     }
 
     /**
@@ -92,9 +96,8 @@ public class WordPanel extends JPanel implements ActionListener {
      * @param bonushints
      * @param bonusword
      */
-    public void addHint(Hint[] bonushints, Word bonusword) {
-        solHints = bonushints;
-        solWord = bonusword;
+    public void addHint(int char_location) {
+        accumulatedHints[char_location] = Hint.CORRECT;
         this.addNextLetters();
     }
 
@@ -104,9 +107,9 @@ public class WordPanel extends JPanel implements ActionListener {
     public void reset() {
         rowsfilled = 0;
         columnsfilled = 0;
-        Arrays.fill(solHints, Hint.WRONG);
-        Arrays.fill(hints, Hint.WRONG);
-        solWord = Word.emptyWord(length);
+        Arrays.fill(hintsForGuess, Hint.WRONG);
+        Arrays.fill(accumulatedHints, Hint.WRONG);
+        solution = Word.emptyWord(length);
         for (HintPanel[] hparray : hintpanels) {
             for (HintPanel hp : hparray) {
                 hp.clear();
@@ -121,10 +124,9 @@ public class WordPanel extends JPanel implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        hintpanels[rowsfilled][columnsfilled].setPanel(guess.toArray()[columnsfilled], hints[columnsfilled]);
-        if (hints[columnsfilled] == Hint.CORRECT) {
-            solHints[columnsfilled] = Hint.CORRECT;
-            solWord = Word.changeLetter(solWord, columnsfilled, guess.toArray()[columnsfilled]);
+        hintpanels[rowsfilled][columnsfilled].setPanel(guess.toArray()[columnsfilled], hintsForGuess[columnsfilled]);
+        if (hintsForGuess[columnsfilled] == Hint.CORRECT) {
+            accumulatedHints[columnsfilled] = Hint.CORRECT;
         }
         columnsfilled++;
         if (columnsfilled == length) {
