@@ -12,6 +12,6 @@ public enum Hint {
 
     WRONG, // = 0
     CLOSE, // = 1
-    CORRECT;//= 2//= 2//= 2//= 2
+    CORRECT;//= 2
 
 }

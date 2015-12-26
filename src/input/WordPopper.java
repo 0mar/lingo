@@ -12,7 +12,7 @@ import java.io.*;
 public class WordPopper {
 
     ArrayList<String> lines;
-    String masterdic = "pickdic.txt";
+    String masterdic = "wordlist.txt";
     String subdic = "dic-size";
     int length;
 
