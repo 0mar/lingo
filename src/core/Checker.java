@@ -57,7 +57,7 @@ class Checker {
         }
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < length; j++) {
-                if (gar[i] == sar[j]) {
+                if (gar[i] == sar[j] && pattern[i] != Hint.CORRECT) {
                     pattern[i] = Hint.CLOSE;
                     sar[j] = '!';
                 }

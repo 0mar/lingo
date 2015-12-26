@@ -29,7 +29,7 @@ public class GameHost implements ActionListener {
     public GameHost(int word_length) {
         this.length = word_length;
         words = new WordPopper(length);
-        this.solution = new Word(words.getNextLingoWord());
+        this.solution = new Word("beleid");
         System.out.println(this.solution);
         guessAmount = 6;
         checker = new Checker(this.solution);
@@ -91,6 +91,6 @@ public class GameHost implements ActionListener {
     }
 
     public static void main(String[] args) {
-        GameHost lucille = new GameHost(5);
+        GameHost lucille = new GameHost(6);
     }
 }
