@@ -14,6 +14,7 @@ public class WordPopper {
     ArrayList<String> lines;
     String masterdic = "pickdic.txt";
     String subdic = "dic-size";
+    int length;
 
     public static Comparator<String> COMPARE_BY_SIZE = new Comparator<String>() {
         @Override
@@ -28,6 +29,7 @@ public class WordPopper {
      * @param n length of word
      */
     public WordPopper(int n) {
+        this.length=n;
         BufferedReader br = null;
         lines = new ArrayList();
         try {
@@ -108,6 +110,19 @@ public class WordPopper {
             System.exit(0);
         }
 
+    }
+    
+    /**
+     * Word validation. We currently only check for length.
+     * Possible extensions: 
+     *  - Check for non-letter chars
+     *  - Check if word exists in dictionary.
+     * 
+     * @param word Non validated user input
+     * @return true if word is allowed, false otherwise.
+     */
+    public boolean validate_word(String word) {
+        return word.length()==this.length;
     }
 
 }

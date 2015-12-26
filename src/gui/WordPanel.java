@@ -30,15 +30,10 @@ public class WordPanel extends JPanel implements ActionListener {
      * @param guesses Number of guesses per player
      */
     public WordPanel(int length, int guesses) {
-        rowsfilled = 0;
-        hintsForGuess = new Hint[length];
-        accumulatedHints = new Hint[length];
-        Arrays.fill(hintsForGuess, Hint.WRONG);
-        Arrays.fill(accumulatedHints, Hint.WRONG);
-        guess = Word.emptyWord(length);
-        solution = Word.emptyWord(length);
         this.guesses = guesses;
         this.length = length;
+        hintsForGuess = new Hint[length];
+        accumulatedHints = new Hint[length];
         hintpanels = new HintPanel[guesses][length];
         drawTimer = new Timer(300, this);
         con = new JButton("Continue (not visible)");
@@ -47,6 +42,23 @@ public class WordPanel extends JPanel implements ActionListener {
             for (int j = 0; j < length; j++) {
                 hintpanels[i][j] = new HintPanel();
                 this.add(hintpanels[i][j]);
+            }
+        }
+        this.initNewGame();
+    }
+
+    /**
+     * Reset word panel to original state.
+     */
+    public void initNewGame() {
+        rowsfilled = 0;
+        columnsfilled = 0;
+        Arrays.fill(hintsForGuess, Hint.WRONG);
+        Arrays.fill(accumulatedHints, Hint.WRONG);
+        solution = Word.emptyWord(length);
+        for (HintPanel[] hparray : hintpanels) {
+            for (HintPanel hp : hparray) {
+                hp.clear();
             }
         }
     }
@@ -98,22 +110,6 @@ public class WordPanel extends JPanel implements ActionListener {
     public void addHint(int char_location) {
         accumulatedHints[char_location] = Hint.CORRECT;
         this.addNextLetters();
-    }
-
-    /**
-     * Reset game screen to original state Todo: Refactor to init method
-     */
-    public void reset() {
-        rowsfilled = 0;
-        columnsfilled = 0;
-        Arrays.fill(hintsForGuess, Hint.WRONG);
-        Arrays.fill(accumulatedHints, Hint.WRONG);
-        solution = Word.emptyWord(length);
-        for (HintPanel[] hparray : hintpanels) {
-            for (HintPanel hp : hparray) {
-                hp.clear();
-            }
-        }
     }
 
     /**

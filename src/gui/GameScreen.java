@@ -79,6 +79,17 @@ public class GameScreen extends JPanel {
         game.getContentPane().validate();
         game.getContentPane().repaint();
     }
+    
+    /**
+     * Reset the game screen.
+     */
+    public void initNewGame() {
+        submit.setEnabled(true);
+        nextGuess.setEditable(true);
+        nextGuess.setEnabled(true);
+        lingo.initNewGame();
+    }
+
 
     /**
      * Process a win
@@ -115,14 +126,5 @@ public class GameScreen extends JPanel {
     public void stopTimer() {
     }
 
-    /**
-     * Reset the game screen.
-     */
-    public void reset() {
-        submit.setEnabled(true);
-        nextGuess.setEditable(true);
-        nextGuess.setEnabled(true);
-        lingo.reset();
-    }
-
+    
 }

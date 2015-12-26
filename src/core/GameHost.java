@@ -16,47 +16,44 @@ public class GameHost implements ActionListener {
 
     private Word solution;
     private Word currentGuess;
-    private int guessAmount;
+    private final int guessAmount;
     private int guessCounter;
-    private int length;
+    private final int length;
     private Checker checker;
-    private GameScreen screen;
-    private WordPopper words;
+    private final GameScreen screen;
+    private final WordPopper words;
 
     /**
      * Constructor of GameHost. Starts a new application.
      *
-     * @param word_length length of words in Lingo game
+     * @param wordLength length of words in Lingo game
+     * @param numberOfGuesses number of guesses a player gets
      */
-    public GameHost(int word_length) {
-        this.length = word_length;
+    public GameHost(int wordLength, int numberOfGuesses) {
+        this.length = wordLength;
+        guessAmount = numberOfGuesses;
         words = new WordPopper(length);
-        this.solution = new Word(words.getNextLingoWord());
-        System.out.println(this.solution);
-        guessAmount = 6;
-        checker = new Checker(this.solution);
         screen = new GameScreen(length, guessAmount);
-        screen.lingo.setSolution(solution);
-        screen.lingo.addHint(checker.getNextHint(screen.lingo.getCurrentHints(), false));
+
         screen.submit.addActionListener(this);
         screen.nextGuess.addActionListener(this);
         screen.restart.addActionListener(this);
         //screen.lingotimer.addActionListener(this);
         screen.lingo.con.addActionListener(this);
+
+        this.initNewGame();
     }
 
     /**
-     * Starts a new game. Might be neat to refactor this into an "init" method
-     * and call it in the constructor as well. (TODO)
+     * Starts a new game. Resets current progress.
      */
-    public void restartGame() {
-        this.solution = new Word(words.getNextLingoWord());
+    public void initNewGame() {
         guessCounter = 0;
+        this.solution = new Word(words.getNextLingoWord());
         checker = new Checker(this.solution);
-        screen.reset();
+        screen.initNewGame();
         screen.lingo.setSolution(solution);
         screen.lingo.addHint(checker.getNextHint(screen.lingo.getCurrentHints(), false));
-
     }
 
     /**
@@ -68,9 +65,10 @@ public class GameHost implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == screen.submit || e.getSource() == screen.nextGuess) {
-            if (screen.nextGuess.getText().length() == length) {
+            String word_attempt = screen.nextGuess.getText();
+            if (words.validate_word(word_attempt)) {
                 screen.stopTimer();
-                currentGuess = new Word(screen.nextGuess.getText());
+                currentGuess = new Word(word_attempt);
                 screen.nextGuess.setText("");
                 guessCounter++;
                 screen.lingo.addWord(currentGuess, checker.evaluateWord(currentGuess));
@@ -80,7 +78,7 @@ public class GameHost implements ActionListener {
             }
         } else if (e.getSource() == screen.restart) {
             screen.stopTimer();
-            this.restartGame();
+            this.initNewGame();
         } else if (e.getSource() == screen.lingotimer.timeUp) {
             screen.stopTimer();
             int bonusletter = checker.getNextHint(screen.lingo.getCurrentHints(), true);
@@ -94,6 +92,8 @@ public class GameHost implements ActionListener {
     }
 
     public static void main(String[] args) {
-        GameHost lucille = new GameHost(5);
+        int wordLength = 5;
+        int numberOfGuesses = 6;
+        GameHost lucille = new GameHost(wordLength, numberOfGuesses);
     }
 }
