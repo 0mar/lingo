@@ -1,31 +1,17 @@
 package core;
 
 /**
- * Extended enum to provide information about the
- * correctness of letter in a guess.
- * If a letter is WRONG, it is not present in the solution
- * If a letter is CLOSE, the solution contains the letter in another position
- * If a letter is CORRECT, the solution contains the letter in that position.
+ * Extended enum to provide information about the correctness of letter in a
+ * guess. If a letter is WRONG, it is not present in the solution If a letter is
+ * CLOSE, the solution contains the letter in another position If a letter is
+ * CORRECT, the solution contains the letter in that position.
  *
  * @author omar
  */
 public enum Hint {
 
-    WRONG,  // = 0
-    CLOSE,  // = 1
-    CORRECT;//= 2
+    WRONG, // = 0
+    CLOSE, // = 1
+    CORRECT;//= 2//= 2//= 2//= 2
 
-    /**
-     * The enums have an internal ordering. This method uses that to obtain the
-     * maximum "hint value".
-     *
-     * @param otherHint Other hint used in comparison
-     * @return
-     */
-    public Hint upgradeHint(Hint otherHint) {
-        if (otherHint.compareTo(this) > 0) {
-            return otherHint;
-        }
-        return this;
-    }
 }

@@ -9,6 +9,7 @@ import javax.swing.*;
 
 /**
  * GUI object where the words are placed. Consists of a collection of Panels.
+ *
  * @author omar
  */
 public class WordPanel extends JPanel implements ActionListener {
@@ -19,11 +20,12 @@ public class WordPanel extends JPanel implements ActionListener {
     public JButton con;
     private int rowsfilled, columnsfilled;
     Timer drawTimer;
-    Word guess,solWord;
-    Hint[] hints,solHints;
+    Word guess, solWord;
+    Hint[] hints, solHints;
 
     /**
      * Build a WordPanel. Only one panel is required per player per application.
+     *
      * @param length Number of letters per word
      * @param guesses Number of guesses per player
      */
@@ -51,6 +53,7 @@ public class WordPanel extends JPanel implements ActionListener {
 
     /**
      * Adds guess to the screen and colors the panels according to the hint
+     *
      * @param guess User validated guess
      * @param cHints Hint array corresponding to solution
      */
@@ -62,8 +65,8 @@ public class WordPanel extends JPanel implements ActionListener {
     }
 
     /**
-     * Change the current word to display all known letters (called after a hint)
-     * Up for refactoring: (TODO)
+     * Change the current word to display all known letters (called after a
+     * hint) Up for refactoring: (TODO)
      */
     public void addNextLetters() {
         boolean cont = false;
@@ -78,34 +81,34 @@ public class WordPanel extends JPanel implements ActionListener {
             }
         }
     }
-    
+
     public Hint[] getCurrentHints() {
         return solHints;
     }
-    
+
     /**
      * Add a new letter to the guess (todo: Refactor)
+     *
      * @param bonushints
-     * @param bonusword 
+     * @param bonusword
      */
     public void addHint(Hint[] bonushints, Word bonusword) {
         solHints = bonushints;
         solWord = bonusword;
         this.addNextLetters();
     }
-     
+
     /**
-     * Reset game screen to original state
-     * Todo: Refactor to init method
+     * Reset game screen to original state Todo: Refactor to init method
      */
     public void reset() {
         rowsfilled = 0;
-        columnsfilled=0;
+        columnsfilled = 0;
         Arrays.fill(solHints, Hint.WRONG);
         Arrays.fill(hints, Hint.WRONG);
         solWord = Word.emptyWord(length);
-        for (HintPanel[] hparray:hintpanels) {
-            for (HintPanel hp:hparray) {
+        for (HintPanel[] hparray : hintpanels) {
+            for (HintPanel hp : hparray) {
                 hp.clear();
             }
         }
@@ -113,13 +116,14 @@ public class WordPanel extends JPanel implements ActionListener {
 
     /**
      * Listener method (Todo: Change guess length bug)
-     * @param e 
+     *
+     * @param e
      */
     @Override
     public void actionPerformed(ActionEvent e) {
         hintpanels[rowsfilled][columnsfilled].setPanel(guess.toArray()[columnsfilled], hints[columnsfilled]);
-        if (hints[columnsfilled]==Hint.CORRECT) {
-            solHints[columnsfilled] = solHints[columnsfilled].upgradeHint(Hint.CORRECT);
+        if (hints[columnsfilled] == Hint.CORRECT) {
+            solHints[columnsfilled] = Hint.CORRECT;
             solWord = Word.changeLetter(solWord, columnsfilled, guess.toArray()[columnsfilled]);
         }
         columnsfilled++;
