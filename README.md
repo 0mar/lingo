@@ -3,7 +3,9 @@
 This is a Java implementation of the Dutch game show [Lingo]. Its GUI is built on the Swing framework.
 The goal of the game is to guess the word with a limited number of attempts. Each guess will be evaluated to indicate which letters and which positions are correct.
 
-![Image example of lingo/Courtesy to WikiMedia](https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Lingo_voorbeeld.PNG/200px-Lingo_voorbeeld.PNG)
+![Image example of lingo](https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Lingo_voorbeeld.PNG/200px-Lingo_voorbeeld.PNG)
+
+*A Lingo game example. Courtesy to WikiMedia*
 
 An (English) example can be seen [here][Lingo-Movie].
 The scope of the implementation is limited: it only allows one team per game. However, most extensions should not be difficult.
