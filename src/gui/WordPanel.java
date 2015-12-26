@@ -50,7 +50,7 @@ public class WordPanel extends JPanel implements ActionListener {
             }
         }
     }
-    
+
     public void setSolution(Word solution) {
         this.solution = solution;
     }
@@ -69,8 +69,7 @@ public class WordPanel extends JPanel implements ActionListener {
     }
 
     /**
-     * Change the current word to display all known letters (called after a
-     * hint) Up for refactoring: (TODO)
+     * Display all the known letters in a word
      */
     public void addNextLetters() {
         boolean cont = false;
@@ -91,10 +90,10 @@ public class WordPanel extends JPanel implements ActionListener {
     }
 
     /**
-     * Add a new letter to the guess (todo: Refactor)
+     * Add a new letter to the known letters. This letter has not been guessed
+     * yet
      *
-     * @param bonushints
-     * @param bonusword
+     * @param char_location location of the new hint in the word
      */
     public void addHint(int char_location) {
         accumulatedHints[char_location] = Hint.CORRECT;
@@ -118,9 +117,9 @@ public class WordPanel extends JPanel implements ActionListener {
     }
 
     /**
-     * Listener method (Todo: Change guess length bug)
+     * Listener method. Draws guesses and reveals accumulated hints.
      *
-     * @param e
+     * @param e Action event
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -131,9 +130,12 @@ public class WordPanel extends JPanel implements ActionListener {
         columnsfilled++;
         if (columnsfilled == length) {
             drawTimer.stop();
-            rowsfilled++;
-            addNextLetters();
-            con.doClick();
+            if (rowsfilled < guesses - 1) {
+                rowsfilled++;
+                addNextLetters();
+                con.doClick();
+            }
+
         }
     }
 }

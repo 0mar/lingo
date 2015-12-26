@@ -3,18 +3,16 @@ package gui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.Timer;
 
 /**
- * GUI representing the playing field.
- * Contains one wordpanel and one score panel. And maybe a timer panel
+ * GUI representing the playing field. Contains one WordPanel and one score
+ * panel. And maybe a timer panel
+ *
  * @author omar
  */
 public class GameScreen extends JPanel {
@@ -62,8 +60,7 @@ public class GameScreen extends JPanel {
         info.setLineWrap(true);
         info.setColumns(20);
         info.setRows(4);
-        
-        
+
         enterpanel.add(nextGuess);
         enterpanel.add(submit);
         pointpanel.add(restart);
@@ -85,6 +82,7 @@ public class GameScreen extends JPanel {
 
     /**
      * Process a win
+     *
      * @param winnings Points for winning
      */
     public void win(int winnings) {
@@ -92,8 +90,8 @@ public class GameScreen extends JPanel {
         this.setBackground(Color.GREEN);
         submit.setEnabled(false);
         nextGuess.setEditable(false);
-        info.setText("Keurig!");
-        pointArea.setText("Punten: " + points);
+        info.setText("Correct!");
+        pointArea.setText("Score: " + points);
     }
 
     /**

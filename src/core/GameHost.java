@@ -51,11 +51,12 @@ public class GameHost implements ActionListener {
      */
     public void restartGame() {
         this.solution = new Word(words.getNextLingoWord());
-        screen.lingo.setSolution(solution);
         guessCounter = 0;
         checker = new Checker(this.solution);
         screen.reset();
+        screen.lingo.setSolution(solution);
         screen.lingo.addHint(checker.getNextHint(screen.lingo.getCurrentHints(), false));
+
     }
 
     /**
@@ -75,9 +76,6 @@ public class GameHost implements ActionListener {
                 screen.lingo.addWord(currentGuess, checker.evaluateWord(currentGuess));
                 if (checker.wordIsCorrect(currentGuess)) {
                     screen.win(25);
-                } else if (guessCounter == guessAmount - 1) {
-                    screen.lose();
-                    screen.lingo.addWord(solution, checker.evaluateWord(solution));
                 }
             }
         } else if (e.getSource() == screen.restart) {
@@ -88,7 +86,10 @@ public class GameHost implements ActionListener {
             int bonusletter = checker.getNextHint(screen.lingo.getCurrentHints(), true);
             screen.lingo.addHint(bonusletter);
         } else if (e.getSource() == screen.lingo.con) {
-            screen.startTimer();
+            if (guessCounter == guessAmount - 1) {
+                screen.lose();
+                screen.lingo.addWord(solution, checker.evaluateWord(solution));
+            }
         }
     }
 
