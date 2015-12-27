@@ -84,7 +84,7 @@ public class GameHost implements ActionListener {
             int bonusletter = checker.getNextHint(screen.lingo.getCurrentHints(), true);
             screen.lingo.addHint(bonusletter);
         } else if (e.getSource() == screen.lingo.con) {
-            if (guessCounter == guessAmount - 1) {
+            if (guessCounter == guessAmount - 1 && !checker.wordIsCorrect(currentGuess)) {
                 screen.lose();
                 screen.lingo.addWord(solution, checker.evaluateWord(solution));
             }
