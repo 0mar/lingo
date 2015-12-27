@@ -4,8 +4,20 @@ import core.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
+import javax.sound.sampled.*;
+import sun.audio.AudioStream;
 
 /**
  * GUI object where the words are placed. Consists of a collection of Panels.
@@ -22,6 +34,8 @@ public class WordPanel extends JPanel implements ActionListener {
     Timer drawTimer;
     Word guess, solution;
     Hint[] hintsForGuess, accumulatedHints;
+    AudioInputStream ais;
+    Clip clip;
 
     /**
      * Build a WordPanel. Only one panel is required per player per application.
@@ -43,6 +57,20 @@ public class WordPanel extends JPanel implements ActionListener {
                 hintpanels[i][j] = new HintPanel();
                 this.add(hintpanels[i][j]);
             }
+        }
+        try {
+            Line.Info linfo = new Line.Info(Clip.class);
+            Line line = AudioSystem.getLine(linfo);
+            clip = (Clip) line;
+            File soundFile = new File("sample.wav");
+            ais = AudioSystem.getAudioInputStream(soundFile);
+        } catch (LineUnavailableException ex) {
+            Logger.getLogger(WordPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            System.out.println("Sample file not found");
+            ex.printStackTrace();
+        } catch (UnsupportedAudioFileException ex) {
+            System.out.println("Audio file cannot be played");
         }
         this.initNewGame();
     }
@@ -124,6 +152,15 @@ public class WordPanel extends JPanel implements ActionListener {
             accumulatedHints[columnsfilled] = Hint.CORRECT;
         }
         columnsfilled++;
+        try {
+            clip.open(ais);
+        } catch (LineUnavailableException ex) {
+            Logger.getLogger(WordPanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(WordPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        clip.start();
+        clip.close();
         if (columnsfilled == length) {
             drawTimer.stop();
             if (rowsfilled < guesses - 1) {
