@@ -18,19 +18,13 @@ In the repository, an example validated list of (Dutch) words is present. The im
 Lingo does not use any external libraries.
 
 ### Installation
-Clone the repo with `git clone https://github.com/0mar/lingo.git`
-then compile the project by doing something along the lines of 
+Clone the repo with `git clone https://github.com/0mar/lingo.git`, or download and unpack the ZIP file.
+The `build.xml` file is included, so I guess most IDEs will recognize the compiling instructions. If not, for any machine with JVM, building a JAR executable and running it should be as simple as
 ```bash
 cd lingo
-mkdir build
-javac src/*/*.java -d build
+ant
+java -jar dist/Lingo.jar
 ```
-Afterwards, Lingo can be launched with
-```
-java -cp build/ core.GameHost
-```
-It would probably be better to stuff this in a Makefile. I have no previous experience with compiling Java from command line, so I expect other (better) ways are available as well. Feedback is welcome.
-
 The first time Lingo is run, it creates a dictionary file for words with the desired length. Restart afterwards.
 ### Version
 1.0
@@ -53,4 +47,5 @@ GNU
 
 [Lingo]: <https://en.wikipedia.org/wiki/Lingo_%28Dutch_game_show%29>
 [Lingo-movie]: <https://www.youtube.com/watch?v=sC0kie6dPjo>
+
 

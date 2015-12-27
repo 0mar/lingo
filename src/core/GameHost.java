@@ -49,7 +49,7 @@ public class GameHost implements ActionListener {
      */
     public void initNewGame() {
         guessCounter = 0;
-        this.solution = new Word("Liefde");
+        this.solution = new Word(words.getNextLingoWord());
         checker = new Checker(this.solution);
         screen.initNewGame();
         screen.lingo.setSolution(solution);
