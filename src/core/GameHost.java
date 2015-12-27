@@ -49,7 +49,7 @@ public class GameHost implements ActionListener {
      */
     public void initNewGame() {
         guessCounter = 0;
-        this.solution = new Word(words.getNextLingoWord());
+        this.solution = new Word("Liefde");
         checker = new Checker(this.solution);
         screen.initNewGame();
         screen.lingo.setSolution(solution);
@@ -92,7 +92,7 @@ public class GameHost implements ActionListener {
     }
 
     public static void main(String[] args) {
-        int wordLength = 5;
+        int wordLength = 6;
         int numberOfGuesses = 6;
         GameHost lucille = new GameHost(wordLength, numberOfGuesses);
     }
