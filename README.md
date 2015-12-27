@@ -24,6 +24,9 @@ then compile the project by doing something along the lines of
 cd lingo
 mkdir build
 javac src/*/*.java -d build
+```
+Afterwards, Lingo can be launched with
+```
 java -cp build/ core.GameHost
 ```
 It would probably be better to stuff this in a Makefile. I have no previous experience with compiling Java from command line, so I expect other (better) ways are available as well. Feedback is welcome.
