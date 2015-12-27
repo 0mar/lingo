@@ -5,7 +5,7 @@ The goal of the game is to guess the word with a limited number of attempts. Eac
 
 ![Image example of lingo](https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Lingo_voorbeeld.PNG/200px-Lingo_voorbeeld.PNG)
 
-*A Lingo game example. Courtesy to WikiMedia*
+*A Lingo game example. Courtesy of WikiMedia*
 
 An (English) example can be seen [here][Lingo-Movie].
 The scope of the implementation is limited: it only allows one team per game. However, most extensions should not be difficult.
@@ -26,6 +26,9 @@ ant
 java -jar dist/Lingo.jar
 ```
 The first time Lingo is run, it creates a dictionary file for words with the desired length. Restart afterwards.
+
+*Remark: When running the `jar` file as an executable, make sure it's in the same folder as the dictionary file*
+
 ### Version
 1.0
 
