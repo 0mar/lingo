@@ -8,7 +8,7 @@ The goal of the game is to guess the word with a limited number of attempts. Eac
 *A Lingo game example. Courtesy of WikiMedia*
 
 An (English) example can be seen [here][Lingo-Movie].
-The scope of the implementation is limited: it only allows one team per game. However, most extensions should not be difficult.
+The scope of the current implementation is limited: it only allows one team per game. However, most extensions should not be difficult.
 As it stands, the game is made significantly easier than it's television counterpart; no time limit is implemented, and guesses are not checked in the dictionary.
 
 In the repository, an example validated list of (Dutch) words is present. The implementation allows for an arbitrary word length. However, the longest word in the provided dictionary is 21 letters.
@@ -27,7 +27,7 @@ java -jar dist/Lingo.jar
 ```
 The first time Lingo is run, it creates a dictionary file for words with the desired length. Restart afterwards.
 
-*Remark: When running the `jar` file as an executable, make sure it's in the same folder as the dictionary file*
+*Remark: when running the `jar` file as an executable, make sure it is executed from the same folder as where the dictionary file is located.*
 
 ### Version
 1.0
