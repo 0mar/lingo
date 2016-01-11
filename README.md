@@ -11,7 +11,7 @@ An (English) example can be seen [here][Lingo-Movie].
 The scope of the current implementation is limited: it only allows one team per game. However, most extensions should not be difficult.
 As it stands, the game is made significantly easier than it's television counterpart; no time limit is implemented, and guesses are not checked in the dictionary.
 
-In the repository, an example validated list of (Dutch) words is present. The implementation allows for an arbitrary word length. However, the longest word in the provided dictionary is 21 letters.
+In the repository, a validated example list of (Dutch) words is present. The word length can be selected in the main Java file.
 
 ### Dependencies
 
@@ -27,7 +27,7 @@ java -jar dist/Lingo.jar
 ```
 The first time Lingo is run, it creates a dictionary file for words with the desired length. Restart afterwards.
 
-*Remark: when running the `jar` file as an executable, make sure it is executed from the same folder as where the dictionary file is located.*
+*Remark: when running the `jar` file, make sure the dictionary is located in the working directory.*
 
 ### Version
 1.0
