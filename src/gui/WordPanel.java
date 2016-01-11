@@ -166,6 +166,7 @@ public class WordPanel extends JPanel implements ActionListener {
             if (rowsfilled < guesses - 1) {
                 rowsfilled++;
                 addNextLetters();
+                Toolkit.getDefaultToolkit().beep();
                 con.doClick();
             }
 
